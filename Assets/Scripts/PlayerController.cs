@@ -9,12 +9,12 @@ public class PlayerController : MonoBehaviour
     private float horizontalInput = 0;
     private bool isGrounded = false;
     private bool isCanJump = false;
-
+    private GameManager gm;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        
+        gm = FindAnyObjectByType<GameManager>();
     }
 
     // Update is called once per frame
@@ -39,6 +39,19 @@ public class PlayerController : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        isGrounded = true;
+        if (collision.transform.tag == "Ground")
+        {
+            isGrounded = true;
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+
+        if (other.tag == "DeadZone")
+        {
+            // tạo mới BasicRoad
+            gm.CreateBasicRoad();
+            Destroy(other.transform.parent.gameObject, 2);
+        }
     }
 }
