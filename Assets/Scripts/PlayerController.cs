@@ -50,8 +50,9 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "DeadZone")
         {
             // tạo mới BasicRoad
-            gm.CreateBasicRoad();
+            gm.CreateBasicRoad(true);
             Destroy(other.transform.parent.gameObject, 2);
+            gm.AddScore(1);
         }
     }
 }
